@@ -35,11 +35,12 @@ void minimizeNorm( SrcView const& src, DstView& dst ) {
 						- src(x - 1, y + 1)[c]
 						+ src(x - 1, y - 1)[c]
 					);
-					dst(x, y)[c] = (
+					double np = (
 						+ (dx * dx) * (src(x, y + 1)[c] + src(x, y - 1)[c])
 						+ (dy * dy) * (src(x + 1, y)[c] + src(x - 1, y)[c])
 						- dx * dy * dxdy * (1.0 / 2.0)
-					) / ((dx * dx + dy * dy) * 2.0);
+					) / (dx * dx + dy * dy);
+					dst(x, y)[c] = (src(x, y)[c] + np) * (1.0 / 3.0);
 				}
 			}
 		}
